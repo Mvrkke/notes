@@ -1,26 +1,22 @@
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditorToolbar from "./EditorToolbar";
-
-interface Note {
-  id: string;
-  title: string;
-  content: string;
-}
+import type { Note } from "@/lib/utils";
 
 interface NoteEditorProps {
   note?: Note;
   onNoteChange?: (note: Note) => void;
 }
 
-const NoteEditor = ({
-  note = {
-    id: "1",
-    title: "Untitled Note",
-    content: "Start writing your note here...",
-  },
-  onNoteChange = () => {},
-}: NoteEditorProps) => {
+const NoteEditor = ({ note, onNoteChange = () => {} }: NoteEditorProps) => {
+  if (!note) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center text-muted-foreground">
+        Select a note or create a new one
+      </div>
+    );
+  }
+
   return (
     <div className="h-full flex flex-col p-4">
       <input
